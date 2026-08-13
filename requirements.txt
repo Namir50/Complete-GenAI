@@ -7,3 +7,5 @@ langchain-google-genai
 langchain-google-vertexai
 tavily-python
 ipywidgets
+sounddevice
+scipy
