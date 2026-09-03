@@ -9,3 +9,5 @@ tavily-python
 ipywidgets
 sounddevice
 scipy
+langchain-mcp-adapters
+mcp
