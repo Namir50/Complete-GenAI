@@ -11,3 +11,5 @@ sounddevice
 scipy
 langchain-mcp-adapters
 mcp
+langgraph
+langsmith
