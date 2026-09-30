@@ -1,23 +1,17 @@
-from typing import Any
-import httpx
+from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
+from tavily import TavilyClient
 
-mcp = FastMCP("weather")
+# Load TAVILY_API_KEY from .env
+load_dotenv()
 
-NWS_API_BASE = "https://api.weather.gov"
-USER_AGENT = "weather-app/1.0"
+mcp = FastMCP("Weather")
+tavily_search = TavilyClient()
 
+@mcp.tool()
+def get_weather(location: str) -> str:
+    """Get the current weather for a given location"""
+    return tavily_search.qna_search(query=f"current weather in {location}") #here we are doing qna_search as it returns clean string instead of dict with metadata
 
-async def make_nws_request(url: str) -> dict[str, Any] | None:
-    """Make a request to the NWS API with proper error handling."""
-    headers = {
-        "User-Agent": USER_AGENT,
-        "Accept": "application/geo+json"
-    }
-    async with httpx.AsyncClient() as client:
-        try:
-            response = await client.get(url, headers=headers, timeout=30.0)
-            response.raise_for_status()
-            return response.json()
-        except Exception:
-            return None
+if __name__ == "__main__":
+    mcp.run(transport="streamable-http")
