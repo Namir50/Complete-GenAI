@@ -13,3 +13,4 @@ langchain-mcp-adapters
 mcp
 langgraph
 langsmith
+langgraph-cli[inmem]
